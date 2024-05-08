@@ -3,37 +3,39 @@
 
 **Skriv din rapport här!**
 
-_Du kan ta bort all text som finns sedan tidigare_.
+1. **Finding an External Library**:
+   I chose the Apache Commons Math library, a powerful and versatile toolkit for various mathematical operations. This library offers functionality that simplifies the task of statistical analysis among other mathematical computations.
 
-## Följande grundsyn gäller dugga-svar:
+2. **Adding the Library as a Dependency**:
+   To include the Apache Commons Math library in the project, I added the following line to the `app/build.gradle` file under dependencies:
+   ```groovy
+   implementation 'org.apache.commons:commons-math3:3.6.1'
+   ```
+   This line tells the Gradle build system to fetch the specified version of the library and make it available for use in the project.
 
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
+3. **Modifying XML Layout and Java Code**:
+   To utilize the new library, I first updated the app’s user interface layout in the XML file, adding four decimal input fields and a button to trigger the calculation. Here’s a snippet from the Java code in `MainActivity`, where I set up these UI elements:
+   ```java
+   editTextNumberDecimal1 = findViewById(R.id.editTextNumberDecimal1);
+   editTextNumberDecimal2 = findViewById(R.id.editTextNumberDecimal2);
+   editTextNumberDecimal3 = findViewById(R.id.editTextNumberDecimal3);
+   editTextNumberDecimal4 = findViewById(R.id.editTextNumberDecimal4);
+   button = findViewById(R.id.button);
+   ```
 
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+4. **Implementing Functionality Using the External Library**:
+   In the `calculate` method, I created an instance of `DescriptiveStatistics` from the Apache Commons Math library. This object allows for the accumulation of numerical data to compute statistics like the mean:
+   ```java
+   DescriptiveStatistics statistics = new DescriptiveStatistics();
+   statistics.addValue(Integer.valueOf(editTextNumberDecimal1.getText().toString()));
+   statistics.addValue(Integer.valueOf(editTextNumberDecimal2.getText().toString()));
+   statistics.addValue(Integer.valueOf(editTextNumberDecimal3.getText().toString()));
+   statistics.addValue(Integer.valueOf(editTextNumberDecimal4.getText().toString()));
+   button.setText("" + statistics.getMean());
+   ```
+   Here, each value entered by the user is added to the `statistics` object. When the user presses the button, the mean of these values is calculated and displayed on the button itself.
 
-```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
-}
-```
-
-Bilder läggs i samma mapp som markdown-filen.
-
-![](android.png)
+![](android1.png)
 
 Läs gärna:
 
